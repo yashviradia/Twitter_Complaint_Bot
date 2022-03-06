@@ -33,24 +33,24 @@ class InternetSpeedTwitterBot:
         time.sleep(30)
         go_button.click()
 
-        time.sleep(60)
-        self.up = DRIVER.find_element(By.XPATH, "//*[@id='container']/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[3]/div/div[2]/span")
-        self.down = DRIVER.find_element(By.XPATH, "//*[@id='container']/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[2]/div/div[2]/span")
+        time.sleep(5)
+        self.up = DRIVER.find_element(By.XPATH, "//*[@id='container']/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[3]/div/div[2]/span").text
+        self.down = DRIVER.find_element(By.XPATH, "//*[@id='container']/div/div[3]/div/div/div/div[2]/div[3]/div[3]/div/div[3]/div/div/div[2]/div[1]/div[2]/div/div[2]/span").text
 
-        upload_speed = self.up.text
-        download_speed = self.down.text
-
-        print(upload_speed)
-        print(download_speed)
 
     def tweet_at_provider(self):
+        time.sleep(60)
+
         DRIVER.get("https://twitter.com/i/flow/login")
+        time.sleep(5)
 
         username_input = DRIVER.find_element(By.XPATH, "//*[@id='layers']/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[5]/label/div/div[2]/div/input")
         username_input.send_keys(ACCOUNT_NAME)
+        time.sleep(5)
 
         proceed_button = DRIVER.find_element(By.XPATH, "//*[@id='layers']/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[6]/div/span/span")
         proceed_button.click()
+        time.sleep(5)
 
         password_input = DRIVER.find_element(By.XPATH, "//*[@id='layers']/div/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div/div/div[3]/div/label/div/div[2]/div[1]/input")
         password_input.send_keys(ACCOUNT_PASSWORD)
@@ -60,9 +60,10 @@ class InternetSpeedTwitterBot:
 
         time.sleep(2)
 
-        if (int(self.up.text) < PROMISED_UP) and (int(self.down.text) < PROMISED_DOWN):
-            twitter_space = DRIVER.find_element(By.XPATH, "//*[@id='react-root']/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div/label/div[1]/div/div/div/div/div[2]/div/div/div/div")
-            twitter_space.send_keys(f"Hey Internet Provider, why is my internet speed \n{self.down}down/{self.up}up when I pay for {PROMISED_DOWN}down/{PROMISED_UP}up?")
+        twitter_space = DRIVER.find_element(By.XPATH, "//*[@id='react-root']/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div[1]/div/div/div/div/div/div/div/div/div/label/div[1]/div/div/div/div/div[2]/div/div/div/div")
+        twitter_space.send_keys(f"Hey Internet Provider, why is my internet speed \n{self.down}down/{self.up}up when I pay for {PROMISED_DOWN}down/{PROMISED_UP}up?")
 
-            tweet_button = DRIVER.find_element(By.XPATH, "//*[@id='react-root']/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div[3]/div/div/div[2]/div[3]/div")
-            tweet_button.click()
+        tweet_button = DRIVER.find_element(By.XPATH, "//*[@id='react-root']/div/div/div[2]/main/div/div/div/div[1]/div/div[2]/div/div[2]/div[1]/div/div/div/div[2]/div[3]/div/div/div[2]/div[3]/div")
+        tweet_button.click()
+
+        DRIVER.quit()
